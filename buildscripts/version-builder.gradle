@@ -1,0 +1,95 @@
+def urlExists(String repositoryUrl) {
+
+    try {
+        def connection = (HttpURLConnection) new URL(repositoryUrl).openConnection()
+
+        connection.setRequestProperty("Authorization", "Basic " + getBase64EncodedCredentials())
+        connection.setConnectTimeout(10000)
+        connection.setReadTimeout(10000)
+        connection.setRequestMethod("HEAD")
+
+        def responseCode = connection.getResponseCode()
+
+        if (responseCode == 401) {
+            throw new RuntimeException("Unauthorized MavenUser user. Please provide valid username and password.")
+        }
+
+        return (200 == responseCode)
+
+    } catch (IOException ignored) {
+        println(ignored)
+        return false
+    }
+}
+
+static def getBase64EncodedCredentials() {
+    def s = "${System.getenv('ARTIFACTORY_USERNAME')}" + ":" + "${System.getenv('ARTIFACTORY_PASSWORD')}"
+    return s.bytes.encodeBase64().toString()
+}
+
+def getGitHashUploadUrl(String repoName, String fileName) {
+
+    def repo = repoName.toLowerCase()
+    def ARTIFACT_VERSION = ""
+    switch (repo) {
+        case "qmobileapi":
+            ARTIFACT_VERSION = Versions.qmobileapi
+            break
+        case "qmobiledatastore":
+            ARTIFACT_VERSION = Versions.qmobiledatastore
+            break
+        case "qmobiledatasync":
+            ARTIFACT_VERSION = Versions.qmobiledatasync
+            break
+        case "qmobileui":
+            ARTIFACT_VERSION = Versions.qmobileui
+            break
+        default:
+            break
+    }
+
+    def machineIP = System.getenv('ARTIFACTORY_MACHINE_IP')
+    def contextUrl = "http://${machineIP}:8081/artifactory"
+    def repoKey = "libs-release-local"
+    def ARTIFACT_GROUP = "com.qmobile.${repo}"
+    def ARTIFACT_ID = "${repo}"
+    def ARTIFACT_BRANCH = System.getenv('ARTIFACTORY_BRANCH')
+    if (ARTIFACT_BRANCH == null || ARTIFACT_BRANCH == "main")
+        ARTIFACT_BRANCH = "master"
+    return "${contextUrl}/${repoKey}/${ARTIFACT_GROUP.replace(".", "/")}/${ARTIFACT_ID}/${ARTIFACT_VERSION}-${ARTIFACT_BRANCH}/${fileName}"
+}
+
+def writeMergedHashFile(String mergedHash, String fileName) {
+    new File(projectDir, fileName).text = mergedHash
+}
+
+def generateVersion() {
+    def libs = ["qmobileapi", "qmobiledatastore", "qmobiledatasync", "qmobileui"]
+    def auth = "-u" + System.getenv('ARTIFACTORY_USERNAME') + ':' + System.getenv('ARTIFACTORY_PASSWORD')
+    def merged_hash = ""
+    for (lib in libs) {
+        def link = getGitHashUploadUrl(lib, "gitHash.txt")
+        println("link = $link")
+        if (urlExists(link)) {
+            def proc = ['curl', auth, link].execute()
+            proc.in.eachLine { line ->
+                println("received from curl request = $line")
+                if (merged_hash.isEmpty())
+                    merged_hash = line
+                else
+                    merged_hash = merged_hash + "." + line
+            }
+            proc.err.eachLine { line -> println line }
+            proc.waitFor()
+        } else {
+            println("Missing file at $link")
+        }
+    }
+    println("Writing \"$merged_hash\" in versions.txt")
+    writeMergedHashFile(merged_hash, "versions.txt")
+}
+
+// Export methods by turning them into closures
+ext {
+    generateVersion = this.&generateVersion
+}

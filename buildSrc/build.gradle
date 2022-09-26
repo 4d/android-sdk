@@ -1,0 +1,42 @@
+apply plugin: 'java-gradle-plugin' // Allows us to create and configure plugin
+apply plugin: 'kotlin' //We'll write our plugin in Kotlin
+
+buildscript {
+	ext.kotlin_version = '1.7.10'
+	ext.gradle_version = '7.2.1'
+	ext.maven_version = '3.8.6'
+	repositories {
+		google()
+		mavenCentral()
+	}
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+		classpath "com.android.tools.build:gradle:$gradle_version"
+	}
+}
+
+repositories {
+	google()
+	mavenCentral()
+}
+
+gradlePlugin {
+	plugins {
+		create("DependencyExport") {
+			id = "DependencyExport"
+			implementationClass = "DependencyExport"
+		}
+	}
+}
+
+dependencies {
+	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+	implementation "com.google.code.gson:gson:2.9.0"
+
+	// Android gradle plugin will allow us to access Android specific features
+	implementation "com.android.tools.build:gradle:$gradle_version"
+	implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+	implementation "org.apache.maven:maven-model:$maven_version"
+	implementation "org.apache.maven:maven-model-builder:$maven_version"
+}
