@@ -54,8 +54,8 @@ def getGitHashUploadUrl(String repoName, String fileName) {
     def ARTIFACT_GROUP = "com.qmobile.${repo}"
     def ARTIFACT_ID = "${repo}"
     def ARTIFACT_BRANCH = System.getenv('ARTIFACTORY_BRANCH')
-    if (ARTIFACT_BRANCH == null || ARTIFACT_BRANCH == "main")
-        ARTIFACT_BRANCH = "master"
+    if (ARTIFACT_BRANCH == null)
+        ARTIFACT_BRANCH = "main"
     return "${contextUrl}/${repoKey}/${ARTIFACT_GROUP.replace(".", "/")}/${ARTIFACT_ID}/${ARTIFACT_VERSION}-${ARTIFACT_BRANCH}/${fileName}"
 }
 

@@ -38,8 +38,8 @@ allprojects {
 
 ext {
     def ARTIFACT_BRANCH = System.getenv('ARTIFACTORY_BRANCH')
-    if (ARTIFACT_BRANCH == null || ARTIFACT_BRANCH == "main")
-        ARTIFACT_BRANCH = "master"
+    if (ARTIFACT_BRANCH == null)
+        ARTIFACT_BRANCH = "main"
     QMobileAPI = QMobileLibs.qmobileapi + '-' + ARTIFACT_BRANCH
     QMobileDataStore = QMobileLibs.qmobiledatastore + '-' + ARTIFACT_BRANCH
     QMobileDataSync = QMobileLibs.qmobiledatasync + '-' + ARTIFACT_BRANCH
