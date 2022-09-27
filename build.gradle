@@ -117,6 +117,12 @@ dependencies {
     implementation "org.apache.httpcomponents:httpclient:4.5.9"
     implementation "commons-io:commons-io:2.4"
     implementation "org.apache.commons:commons-compress:1.20"
+
+    // buildSrc dependencies
+    implementation "org.xerial:sqlite-jdbc:3.36.0.3"
+    implementation "org.jetbrains.kotlin:kotlin-scripting-jvm:1.7.10"
+    implementation "org.json:json:20210307"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.10"
 }
 
 mavenDependencyExport {
