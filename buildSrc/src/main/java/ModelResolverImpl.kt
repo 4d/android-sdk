@@ -53,7 +53,7 @@ class ModelResolverImpl(
 
     @Throws(UnresolvableModelException::class)
     override fun resolveModel(parent: Parent): ModelSource {
-        return resolveModel(parent.getGroupId(), parent.getArtifactId(), parent.getVersion())
+        return resolveModel(parent.groupId, parent.artifactId, parent.version)
     }
 
     @Throws(UnresolvableModelException::class)
