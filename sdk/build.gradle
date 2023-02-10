@@ -1,7 +1,9 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlin-android'
+//apply plugin: 'androidx.navigation.safeargs.kotlin'
+//apply plugin: 'kotlin-kapt'
+//apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+//apply plugin: "com.google.gms.google-services"
 
 apply from: "$rootDir/buildscripts/version-builder.gradle"
 
