@@ -17,6 +17,7 @@ Run `./gradlew clean --refresh-dependencies mavenDependencyExport`
 
 And get the libraries in the `dependencies/` directory
 
+Alternatively you could use help script `build.sh`
 
 ## Deploy
 
@@ -40,7 +41,6 @@ If no SDK found it will be downloaded from latest release of this project.
 | [QMobileUI](https://github.com/4d/android-QMobileUI) | [4D](https://github.com/4d/android-QMobileUI/blob/master/LICENSE.md) | Graphic, Application, Features |
 
 ### 3rd parties
-
 
 #### Core
 
