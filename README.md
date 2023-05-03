@@ -9,6 +9,7 @@ You can build the SDK with either Windows or macOS operating systems.
 To build Android SDK, you should download Android Studio:
 
 - [Android Studio](https://developer.android.com/studio) : version requirements in [documentation](https://github.com/doc4d/go-mobile/blob/main/docs/getting-started/requirements.md#android)
+- Java 11 is required for latest versions of the sdk. Java 11 is embedded in recent Android Studio versions.
 
 ## Build
 
