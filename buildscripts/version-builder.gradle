@@ -49,14 +49,16 @@ def getGitHashUploadUrl(String repoName, String fileName) {
     }
 
     def machineIP = System.getenv('ARTIFACTORY_MACHINE_IP')
-    def contextUrl = "http://${machineIP}:8081/artifactory"
-    def repoKey = "libs-release-local"
+    def port = System.getenv('ARTIFACTORY_PORT') ?: "8081"
+    def scheme = System.getenv('ARTIFACTORY_SCHEME') ?: "http"
+    def urlPath = System.getenv('ARTIFACTORY_PATH') ?: "artifactory/libs-release-local"
+    def url = "${scheme}://${machineIP}:${port}/${urlPath}"
     def ARTIFACT_GROUP = "com.qmobile.${repo}"
     def ARTIFACT_ID = "${repo}"
     def ARTIFACT_BRANCH = System.getenv('ARTIFACTORY_BRANCH')
     if (ARTIFACT_BRANCH == null)
         ARTIFACT_BRANCH = "main"
-    return "${contextUrl}/${repoKey}/${ARTIFACT_GROUP.replace(".", "/")}/${ARTIFACT_ID}/${ARTIFACT_VERSION}-${ARTIFACT_BRANCH}/${fileName}"
+    return "${url}/${ARTIFACT_GROUP.replace(".", "/")}/${ARTIFACT_ID}/${ARTIFACT_VERSION}-${ARTIFACT_BRANCH}/${fileName}"
 }
 
 def writeMergedHashFile(String mergedHash, String fileName) {
