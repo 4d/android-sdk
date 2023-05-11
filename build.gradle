@@ -64,10 +64,15 @@ configurations {
 dependencies {
 
     // QMobile libraries
-    implementation(QMobileAPI) { changing = true }
-    implementation(QMobileDataStore) {changing = true }
-    implementation(QMobileDataSync) { changing = true }
-    implementation(QMobileUI) { changing = true }
+//    implementation(QMobileAPI) { changing = true }
+//    implementation(QMobileDataStore) {changing = true }
+//    implementation(QMobileDataSync) { changing = true }
+//    implementation(QMobileUI) { changing = true }
+//    implementation project(path: ':qmobileapi', configuration: 'default')
+//    implementation project(path: ':qmobiledatastore', configuration: 'default')
+//    implementation project(path: ':qmobiledatasync', configuration: 'default')
+//    implementation project(path: ':qmobileui', configuration: 'default')
+
 
     // Room
     //    kapt Libs.sqlite_jdbc

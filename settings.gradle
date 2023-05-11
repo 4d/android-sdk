@@ -1,2 +1,2 @@
 include ':sdk'
-rootProject.name = 'SDK'
+rootProject.name = 'android-sdk'
