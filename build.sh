@@ -14,19 +14,34 @@ java -version
 echo "ℹ️ java 11 required"
 # TODO: exit if not good version?
 
-#export ARTIFACTORY_SCHEME="http"
-if [ -z "$ARTIFACTORY_MACHINE_IP" ]; then
-  >&2 echo "❌ You must defined ARTIFACTORY_MACHINE_IP"
-  # exit 2
-  export ARTIFACTORY_MACHINE_IP="localhost"
-fi
-#export ARTIFACTORY_MACHINE_IP="8081"
-#export ARTIFACTORY_PATH="artifactory/libs-release-local"
 
-if [ -z "$ARTIFACTORY_USERNAME"] || [ -z "$ARTIFACTORY_PASSWORD" ]; then
-  >&2 echo "⚠️ You must defined ARTIFACTORY_USERNAME && ARTIFACTORY_PASSWORD. Default will be used"
-  export ARTIFACTORY_USERNAME="admin"
-  export ARTIFACTORY_PASSWORD="password"
-fi
+current=`pwd`
+echo $current
+export CI_DEPS_TO_BE_FETCHED=true
+
+rm -fr dependencies/*
 
 ./gradlew clean --refresh-dependencies mavenDependencyExport
+
+mkdir tmp_qmobile_modules
+cd tmp_qmobile_modules
+
+projects="QMobileAPI QMobileDataStore QMobileDataSync QMobileUI"
+
+for project in $projects; do
+    echo "📦 Cloning $project"
+    rm -fr android-$project
+    git clone https://github.com/4d/android-$project.git
+    lowercase_project=`echo $project | tr "[:upper:]" "[:lower:]"`
+    cd android-$project
+    echo `pwd`
+    ./gradlew assemble
+    ./gradlew generatePomFileForAarPublication
+    mkdir -p $current/dependencies/com/qmobile/$lowercase_project/$lowercase_project/0.0.1-main
+    cp $lowercase_project/build/outputs/aar/$lowercase_project-debug.aar $current/dependencies/com/qmobile/$lowercase_project/$lowercase_project/0.0.1-main/$lowercase_project-0.0.1-main.aar
+    cp $lowercase_project/build/publications/aar/pom-default.xml $current/dependencies/com/qmobile/$lowercase_project/$lowercase_project/0.0.1-main/$lowercase_project-0.0.1-main.pom
+    cd ..
+done
+
+cd ..
+rm -fr tmp_qmobile_modules
