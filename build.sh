@@ -95,6 +95,7 @@ version_file="$SCRIPT_DIR/sdk/versions.txt"
 echo -n "" > "$version_file" # create empty version file
 
 export DEPS_PATH="../android-" # to build relatively to others
+export CI_DEPS_TO_BE_FETCHED=true # do not use local repositories or pom file is invalid
 
 for project in $projects; do
 

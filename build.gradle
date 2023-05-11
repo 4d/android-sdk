@@ -129,6 +129,42 @@ dependencies {
     implementation "org.xerial:sqlite-jdbc:3.36.0.3"
     implementation "org.jetbrains.kotlin:kotlin-scripting-jvm:1.7.10"
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.10"
+
+    implementation Libs.androidx_paging3
+    implementation Libs.androidx_camera2
+    implementation Libs.androidx_camera_lifecycle
+    implementation Libs.androidx_camera_view
+    implementation Libs.barcode_scanning
+    implementation Libs.androidx_activity_ktx
+    implementation Libs.androidx_fragment_ktx
+    implementation Libs.androidx_preference_ktx
+    implementation Libs.splashscreen
+    implementation Libs.swiperefreshlayout
+    implementation Libs.androidx_navigation_ui
+    implementation Libs.glide_transformations
+    implementation Libs.play_services_maps
+    implementation Libs.maps_ktx
+    implementation Libs.maps_utils_ktx
+    implementation Libs.firebase_messaging
+    implementation Libs.insetter
+    implementation Libs.androidx_appcompat
+    implementation Libs.kotlin_coroutines_core
+    implementation Libs.lifecycle_livedata_ktx
+    implementation Libs.lifecycle_runtime_ktx
+    implementation Libs.lifecycle_viewmodel_ktx
+    implementation Libs.okhttp_jvm
+    implementation Libs.okhttp_logging_interceptor
+    implementation Libs.okhttp_tls
+    implementation Libs.retrofit_adapter_rxjava2
+    implementation Libs.retrofit_converter_gson
+    implementation Libs.jackson_yaml
+    implementation Libs.retrofit
+    implementation Libs.rxjava
+    implementation Libs.androidx_preference_ktx
+    implementation Libs.rxandroid
+    implementation Libs.play_services_auth
+    implementation Libs.play_services_location
+    implementation Libs.signature_pad
 }
 
 mavenDependencyExport {
