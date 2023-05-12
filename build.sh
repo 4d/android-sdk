@@ -95,7 +95,6 @@ version_file="$SCRIPT_DIR/sdk/versions.txt"
 echo -n "" > "$version_file" # create empty version file
 
 export DEPS_PATH="../android-" # to build relatively to others
-export CI_DEPS_TO_BE_FETCHED=true # do not use local repositories or pom file is invalid
 
 for project in $projects; do
 
@@ -145,6 +144,34 @@ for project in $projects; do
       echo "❌ Failed to generate aar $project"
       exit 2
     fi
+
+    # Quick fix QMobileDataSync and QMobileUI pom files
+    pom="$DEP_DIR/com/qmobile/$project_lower/$project_lower/$qmobile_version-$branch/$project_lower-$qmobile_version-$branch.pom"
+
+    if [ $project == "QMobileUI" ]; then
+      dependencies="QMobileAPI QMobileDataStore QMobileDataSync"
+    elif [ $project == "QMobileDataSync" ]; then
+      dependencies="QMobileAPI QMobileDataStore"
+    else 
+      dependencies=""
+    fi
+
+    for dependency in $dependencies; do
+      dependency_lower=$(echo "$dependency" | tr "[:upper:]" "[:lower:]")
+      
+      xmllint --shell $pom << EOF
+cd //*[local-name()='dependency']/*[local-name()='artifactId' and text()='$dependency_lower']/../*[local-name()='version']
+set 0.0.1-$branch
+save
+EOF
+
+      xmllint --shell $pom << EOF
+cd //*[local-name()='dependency']/*[local-name()='artifactId' and text()='$dependency_lower']/../*[local-name()='groupId']
+set com.qmobile.$dependency_lower
+save
+EOF
+
+    done
 
 done
 
