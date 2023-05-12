@@ -66,6 +66,10 @@ def writeMergedHashFile(String mergedHash, String fileName) {
 }
 
 def generateVersion() {
+    if (System.getenv('ARTIFACTORY_MACHINE_IP') == null) {
+        // not implemented (we could imagine implement it using DEPS_PATH to find source of QMobile if defined)
+        return
+    }
     def libs = ["qmobileapi", "qmobiledatastore", "qmobiledatasync", "qmobileui"]
     def auth = "-u" + System.getenv('ARTIFACTORY_USERNAME') + ':' + System.getenv('ARTIFACTORY_PASSWORD')
     def merged_hash = ""
