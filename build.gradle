@@ -162,22 +162,18 @@ dependencies {
     implementation Libs.rxjava
     implementation Libs.androidx_preference_ktx
     implementation Libs.rxandroid
-    implementation Libs.play_services_auth
-    implementation Libs.play_services_location
+    // implementation Libs.play_services_auth
+    // implementation Libs.play_services_location
     implementation Libs.signature_pad
 
     implementation "androidx.databinding:viewbinding:7.3.1"
     implementation "androidx.databinding:databinding-ktx:7.3.1"
     implementation "androidx.databinding:databinding-compiler:7.3.1"
     implementation "androidx.databinding:databinding-adapters:7.3.1"
-    alt("androidx.core:core-ktx") {
-        version {
-            strictly("1.8.0")
-        }
-    }
+
     implementation("androidx.core:core-ktx") {
         version {
-            strictly("1.7.0")
+            strictly("1.9.0")
         }
     }
     alt("androidx.transition:transition") {
@@ -187,7 +183,22 @@ dependencies {
     }
     alt("androidx.lifecycle:lifecycle-process") {
         version {
-            strictly("2.4.0")
+            strictly("2.4.1")
+        }
+    }
+    alt("androidx.lifecycle:lifecycle-viewmodel-ktx") {
+        version {
+            strictly("2.5.1")
+        }
+    }
+    alt("androidx.lifecycle:lifecycle-livedata-ktx") {
+        version {
+            strictly("2.5.1")
+        }
+    }
+    alt("androidx.lifecycle:lifecycle-runtime-ktx") {
+        version {
+            strictly("2.5.1")
         }
     }
 }
