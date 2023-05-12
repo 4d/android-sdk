@@ -21,13 +21,20 @@ Alternatively you could use help script `build.sh`
 
 ## Deploy
 
-The SDK used by "4D Mobile App" will be copyed by project from cache folder.
+The SDK used by "4D Mobile App" will be copyed by project from cache folder to the generated mobile app.
 
 By default the Android SDK must be installed into: `/Library/Caches/com.4D.mobile/sdk/<version>/Android/sdk`
 
-- with `version`, the 4d version represented as 4 digits (for instance v20=2000 , v20R2=2020)
+- with `<version>`, the 4d version represented as 4 digits (for instance v20=2000 , v20R2=2020)
 
-If no SDK found it will be downloaded from latest release of this project.
+If no SDK found it will be downloaded from [latest release of this project](https://github.com/4d/android-sdk/releases).
+
+You could also put an archive "android.zip" inside
+
+- mobile component `4D Mobile App/Resources/sdk/`
+- or inside `<YourBase>/Resources/mobile/sdk/`
+
+> 💡 You could use `sdkarchive.sh` to archive sdk after building it
 
 ## SDK frameworks
 
