@@ -65,15 +65,12 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd "$SCRIPT_DIR" || exit 3
 
 DEP_DIR=$SCRIPT_DIR/dependencies
-if [ -z "$ARTIFACTORY_MACHINE_IP" ]; then
-  export ARTIFACTORY_MACHINE_IP="localhost" # for less warnings on host
-fi
 
 if [ "$clean" -eq "1" ]; then
   echo ""
   echo "🧹 Clean"
 
-  rm -fr dependencies/*
+  rm -fr "$DEP_DIR"/*
 fi
 
 echo ""
@@ -159,13 +156,13 @@ for project in $projects; do
     for dependency in $dependencies; do
       dependency_lower=$(echo "$dependency" | tr "[:upper:]" "[:lower:]")
       
-      xmllint --shell $pom << EOF
+      xmllint --noout --shell $pom 2>&1 >/dev/null << EOF
 cd //*[local-name()='dependency']/*[local-name()='artifactId' and text()='$dependency_lower']/../*[local-name()='version']
 set 0.0.1-$branch
 save
 EOF
 
-      xmllint --shell $pom << EOF
+      xmllint --noout --shell $pom 2>&1 >/dev/null << EOF
 cd //*[local-name()='dependency']/*[local-name()='artifactId' and text()='$dependency_lower']/../*[local-name()='groupId']
 set com.qmobile.$dependency_lower
 save
@@ -175,5 +172,9 @@ EOF
 
 done
 
+echo "$branch@">"$DEP_DIR/sdkVersion"
+cat "$version_file" >> "$DEP_DIR/sdkVersion"
+cat "$DEP_DIR/sdkVersion"
+echo ""
+
 echo "🎉 Ouput generated in $DEP_DIR"
-cat "$version_file"
