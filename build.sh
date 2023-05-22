@@ -85,8 +85,8 @@ mkdir -p ".checkout"
 
 projects="QMobileAPI QMobileDataStore QMobileDataSync QMobileUI"
 
-# url="https://github.com/4d/android-"
-url="git@github.com:4d/android-"
+url="https://github.com/4d/android-"
+# url="git@github.com:4d/android-"
 
 version_file="$SCRIPT_DIR/sdk/versions.txt"
 echo -n "" > "$version_file" # create empty version file
