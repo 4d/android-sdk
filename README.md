@@ -21,6 +21,8 @@ Alternatively you could use help script `build.sh`
 
 ## Deploy
 
+#### How it work
+
 The SDK used by "4D Mobile App" will be copyed by project from cache folder to the generated mobile app.
 
 By default the Android SDK must be installed into: `/Library/Caches/com.4D.mobile/sdk/<version>/Android/sdk`
@@ -29,12 +31,16 @@ By default the Android SDK must be installed into: `/Library/Caches/com.4D.mobil
 
 If no SDK found it will be downloaded from [latest release of this project](https://github.com/4d/android-sdk/releases).
 
-You could also put an archive "android.zip" inside
+#### Using archive
+
+Instead of cache you could embeded an archive into your base or the "4D Mobile App" component
+
+💡 Use `sdkarchive.sh` to archive the sdk. It will zip the content of "dependencies".
+
+Then you could this "android.zip" archive inside
 
 - mobile component `4D Mobile App/Resources/sdk/`
 - or inside `<YourBase>/Resources/mobile/sdk/`
-
-> 💡 You could use `sdkarchive.sh` to archive sdk after building it
 
 ## SDK frameworks
 
