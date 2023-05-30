@@ -33,7 +33,7 @@ If no SDK found it will be downloaded from [latest release of this project](http
 
 #### Using archive
 
-Instead of cache you could embeded an archive into your base or the "4D Mobile App" component
+Instead of the cache you could embeded an archive into your base or the "4D Mobile App" component
 
 💡 Use `sdkarchive.sh` to archive the sdk. It will zip the content of "dependencies".
 
