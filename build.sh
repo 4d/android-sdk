@@ -143,11 +143,12 @@ for project in $projects; do
     fi
 
     # Quick fix QMobileDataSync and QMobileUI pom files
+    echo "   🍏 Fix pom file $project"
     pom="$DEP_DIR/com/qmobile/$project_lower/$project_lower/$qmobile_version-$branch/$project_lower-$qmobile_version-$branch.pom"
 
-    if [ $project == "QMobileUI" ]; then
+    if [ "$project" == "QMobileUI" ]; then
       dependencies="QMobileAPI QMobileDataStore QMobileDataSync"
-    elif [ $project == "QMobileDataSync" ]; then
+    elif [ "$project" == "QMobileDataSync" ]; then
       dependencies="QMobileAPI QMobileDataStore"
     else 
       dependencies=""
@@ -155,19 +156,26 @@ for project in $projects; do
 
     for dependency in $dependencies; do
       dependency_lower=$(echo "$dependency" | tr "[:upper:]" "[:lower:]")
-      
-      xmllint --noout --shell $pom 2>&1 >/dev/null << EOF
+
+      echo "       - fix $dependency"
+      if [ -f "$pom" ]; then
+
+        xmllint --noout --shell "$pom" 2>&1 >/dev/null << EOF
 cd //*[local-name()='dependency']/*[local-name()='artifactId' and text()='$dependency_lower']/../*[local-name()='version']
 set 0.0.1-$branch
 save
 EOF
 
-      xmllint --noout --shell $pom 2>&1 >/dev/null << EOF
+        xmllint --noout --shell "$pom" 2>&1 >/dev/null << EOF
 cd //*[local-name()='dependency']/*[local-name()='artifactId' and text()='$dependency_lower']/../*[local-name()='groupId']
 set com.qmobile.$dependency_lower
 save
 EOF
-
+    # FIXME: exit on error
+      else
+        echo "❌ pom file to edit not found $project $pom"
+        exit 2
+      fi
     done
 
 done
