@@ -37,7 +37,7 @@ Instead of the cache you could embeded an archive into your base or the "4D Mobi
 
 💡 Use `sdkarchive.sh` to archive the sdk. It will zip the content of "dependencies".
 
-Then you could this "android.zip" archive inside
+Then you could put this "android.zip" archive inside
 
 - mobile component `4D Mobile App/Resources/sdk/`
 - or inside `<YourBase>/Resources/mobile/sdk/`
