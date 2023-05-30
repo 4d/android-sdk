@@ -172,7 +172,7 @@ EOF
 
 done
 
-echo "$branch@">"$DEP_DIR/sdkVersion"
+echo -n "$branch@">"$DEP_DIR/sdkVersion"
 cat "$version_file" >> "$DEP_DIR/sdkVersion"
 cat "$DEP_DIR/sdkVersion"
 echo ""
