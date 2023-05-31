@@ -186,3 +186,4 @@ cat "$DEP_DIR/sdkVersion"
 echo ""
 
 echo "🎉 Ouput generated in $DEP_DIR"
+echo "📦 You could create an archive android.zip by running ./sdkarchive.sh"
