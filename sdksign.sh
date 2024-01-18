@@ -29,7 +29,11 @@ for file in $(find "$folder" -name "*.jar"); do
     workPath="$workTmp/$name"
     mkdir -p "$workPath"
 
-    unzip -qq "$file" -d "$workPath"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+      ditto -x -k "$file" "$workPath" # ditto have less issue with file name encoding
+    else
+      unzip -qq "$file" -d "$workPath"
+    fi
     if [ "$?" -gt 0 ]; then
       echo "❌ Failed to unzip $file"
       exit 1
@@ -40,7 +44,7 @@ for file in $(find "$folder" -name "*.jar"); do
       exit 1
     fi
     rm "$file"
-    cd "$workPath"; zip -qq -r -u "$file" .
+    cd "$workPath"; zip -qq -r "$file" .
     retVal=$?
     if [ "$retVal" -gt 0 ]; then
       echo "❌ ($retVal) Failed to archive $file (maybe jar lost)"
